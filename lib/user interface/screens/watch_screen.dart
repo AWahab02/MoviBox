@@ -6,35 +6,42 @@ import 'package:tmdb_api/tmdb_api.dart';
 
 import '../movies/trending.dart';
 
-class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+class WatchScreen extends StatefulWidget {
+  const WatchScreen({Key? key}) : super(key: key);
 
   @override
-  State<WelcomeScreen> createState() => _WelcomeScreenState();
+  State<WatchScreen> createState() => _WatchScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _WatchScreenState extends State<WatchScreen> {
   List trendingMovies = [];
   final String apikey = "276110cc6e09716ff6c45f16fa626c5c";
-  final readaccesstoken =
-      "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNzYxMTBjYzZlMDk3MTZmZjZjNDVmMTZmYTYyNmM1YyIsInN1YiI6IjY1N2EwYzAyMzVhNjFlMDEzYWMyOTBmOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.vfW-6aMgcveWOeE8pjXTy-JVtIrsoxqXdHyRNabi4Rc";
+  final readaccesstoken = "YOUR_ACCESS_TOKEN_HERE";
   bool _showSearchBar = false;
+  late TMDB tmdbWithLogs;
+  TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
-    loadmovies();
-    super.initState();
-  }
-
-  loadmovies() async {
-    TMDB tmbdwithLogs = TMDB(ApiKeys(apikey, readaccesstoken),
+    tmdbWithLogs = TMDB(ApiKeys(apikey, readaccesstoken),
         logConfig: ConfigLogger(
           showLogs: true,
           showErrorLogs: true,
         ));
-    Map trendingresult = await tmbdwithLogs.v3.movies.getUpcoming();
+    loadMovies();
+    super.initState();
+  }
+
+  loadMovies({String? query}) async {
+    Map result;
+    if (query != null && query.isNotEmpty) {
+      result = await tmdbWithLogs.v3.search.queryMovies(query);
+    } else {
+      result = await tmdbWithLogs.v3.movies.getUpcoming();
+    }
+
     setState(() {
-      trendingMovies = trendingresult['results'];
+      trendingMovies = result['results'];
     });
     print(trendingMovies);
   }
@@ -60,11 +67,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           actions: [
             IconButton(
               icon: Icon(
-                _showSearchBar ? Icons.arrow_back : Icons.search,
+                _showSearchBar ? Icons.clear : Icons.search,
                 color: Colors.black,
               ),
               onPressed: () {
                 setState(() {
+                  if (_showSearchBar) {
+                    _searchController.clear();
+                    loadMovies(); // Reset to show trending movies
+                  }
                   _showSearchBar = !_showSearchBar;
                 });
               },
@@ -72,8 +83,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ],
         ),
       ),
-      body: TrendingMovies(trending: trendingMovies),
-      bottomNavigationBar: CustomNavBar(),
+      body: MoviesList(trending: trendingMovies),
+      bottomNavigationBar: CustomNavBar(
+        curr_index: 1,
+      ),
     );
   }
 
@@ -81,9 +94,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16),
       child: TextField(
+        controller: _searchController,
+        onChanged: (query) {
+          loadMovies(query: query);
+        },
         decoration: InputDecoration(
           hintText: 'Search',
           border: InputBorder.none,
+          // suffixIcon: _searchController.text.isNotEmpty
+          //     ? IconButton(
+          //         icon: Icon(Icons.clear),
+          //         onPressed: () {
+          //           _searchController.clear();
+          //           loadMovies(); // Reset to show trending movies
+          //         },
+          //       )
+          //     : null,
         ),
       ),
     );

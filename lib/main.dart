@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_tickets_task/provider/movie_provider.dart';
-import 'package:movies_tickets_task/user%20interface/screens/welcome_screen.dart';
+import 'package:movies_tickets_task/user%20interface/screens/watch_screen.dart';
+import 'package:movies_tickets_task/user%20interface/screens/welcome_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {

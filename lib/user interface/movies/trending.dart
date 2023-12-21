@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:movies_tickets_task/user%20interface/screens/movie_description.dart';
 
-class TrendingMovies extends StatelessWidget {
+class MoviesList extends StatelessWidget {
   final List trending;
 
-  const TrendingMovies({Key? key, required this.trending}) : super(key: key);
+  const MoviesList({Key? key, required this.trending}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +34,7 @@ class TrendingMovies extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => Description(
+                                    id: trending[index]['id'].toString(),
                                     name: trending[index]['title'],
                                     description: trending[index]['overview'],
                                     bannerurl:
@@ -42,6 +43,7 @@ class TrendingMovies extends StatelessWidget {
                                     posterurl:
                                         'https://image.tmdb.org/t/p/w780' +
                                             trending[index]['poster_path'],
+                                    genres: trending[index]['genre_ids'],
                                     vote: trending[index]['vote_average']
                                         .toString(),
                                     launch_on: trending[index]['release_date'],

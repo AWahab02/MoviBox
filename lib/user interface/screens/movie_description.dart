@@ -1,26 +1,99 @@
+import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // Import the intl package
+import 'package:intl/intl.dart';
 import 'package:movies_tickets_task/user%20interface/screens/tickets_page.dart';
+import 'package:movies_tickets_task/user%20interface/screens/watch_screen.dart';
 import 'package:movies_tickets_task/user%20interface/themes/colors.dart';
+import 'package:movies_tickets_task/models/genre_model.dart';
+import 'package:http/http.dart' as http;
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class Description extends StatelessWidget {
+import '../widgets/video_player.dart';
+
+class Description extends StatefulWidget {
   const Description({
     Key? key,
+    required this.id,
     required this.name,
     required this.description,
     required this.bannerurl,
     required this.posterurl,
     required this.vote,
     required this.launch_on,
+    required this.genres,
   }) : super(key: key);
 
-  final String name, description, bannerurl, posterurl, vote, launch_on;
+  final String id, name, description, bannerurl, posterurl, vote, launch_on;
+  final List<dynamic> genres;
+
+  @override
+  State<Description> createState() => _DescriptionState();
+}
+
+class _DescriptionState extends State<Description> {
+  late List<String> genreNames;
+  late List<dynamic> videos;
+  String key = "";
+
+  YoutubePlayerController _youtubeController = YoutubePlayerController(
+    initialVideoId:
+        'YOUR_INITIAL_VIDEO_ID', // Placeholder value, it will be replaced dynamically
+    flags: YoutubePlayerFlags(
+      autoPlay: true,
+      mute: false,
+    ),
+  );
+
+  List<String> getGenreNames(List<dynamic> genreIds) {
+    return genreIds.map((id) => Genre.getCategoryById(id)).toList();
+  }
+
+  Future<void> fetchMovieVideos() async {
+    final String apiKey = "276110cc6e09716ff6c45f16fa626c5c";
+    final String apiUrl =
+        "http://api.themoviedb.org/3/movie/${widget.id}/videos?api_key=$apiKey";
+
+    try {
+      final response = await http.get(Uri.parse(apiUrl));
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+
+        // Check if 'results' is a list
+        if (data['results'] is List) {
+          setState(() {
+            videos = data['results'];
+            key = videos[0]['key'];
+          });
+        } else {
+          throw Exception('Invalid response format: Results is not a list');
+        }
+      } else {
+        throw Exception('Failed to load movie videos');
+      }
+    } catch (error) {
+      print('Error: $error');
+      throw Exception('Failed to load movie videos');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    genreNames = getGenreNames(widget.genres);
+    fetchMovieVideos();
+    videos = [];
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Format the launch_on date
+    final List<String> genreNames = getGenreNames(widget.genres);
+    print(widget.id);
+    print("keyyyyy");
+    print(key);
     final formattedLaunchOn =
-        DateFormat('MMMM dd, yyyy').format(DateTime.parse(launch_on));
+        DateFormat('MMMM dd, yyyy').format(DateTime.parse(widget.launch_on));
 
     return Scaffold(
       body: Container(
@@ -35,8 +108,33 @@ class Description extends StatelessWidget {
                       height: double.infinity,
                       width: MediaQuery.of(context).size.width,
                       child: Image.network(
-                        posterurl,
+                        widget.posterurl,
                         fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 16,
+                    left: 16,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Row(
+                        children: const [
+                          Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            "Back",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -56,13 +154,13 @@ class Description extends StatelessWidget {
                       ),
                       padding: EdgeInsets.only(
                         top: 16,
-                        bottom: 24, // Increase bottom padding as needed
+                        bottom: 24,
                       ),
                       child: Center(
                         child: Column(
                           children: [
                             Text(
-                              "In Theatres $formattedLaunchOn", // Use the formatted date
+                              "In Theatres $formattedLaunchOn",
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -73,18 +171,18 @@ class Description extends StatelessWidget {
                             ElevatedButton(
                               onPressed: () {
                                 Navigator.push(
-                                    (context),
-                                    MaterialPageRoute(
-                                        builder: (context) => TicketsScreen()));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TicketsScreen(),
+                                  ),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: kGetTickets,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      30), // Increase squareness of border
+                                  borderRadius: BorderRadius.circular(30),
                                 ),
-                                minimumSize: Size(
-                                    220, 50), // Increase height of the button
+                                minimumSize: Size(220, 50),
                               ),
                               child: const Text(
                                 "Get Tickets",
@@ -93,21 +191,23 @@ class Description extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                                height: 24), // Increase height as needed
+                            const SizedBox(height: 24),
                             ElevatedButton.icon(
                               onPressed: () {
-                                // Handle Watch Trailer button press
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => VideoPlayerPage(key),
+                                  ),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.transparent,
                                 side: BorderSide(color: kGetTickets),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      30), // Increase squareness of border
+                                  borderRadius: BorderRadius.circular(30),
                                 ),
-                                minimumSize: Size(
-                                    220, 50), // Increase height of the button
+                                minimumSize: Size(220, 50),
                               ),
                               icon: const Icon(
                                 Icons.play_arrow,
@@ -132,7 +232,7 @@ class Description extends StatelessWidget {
               children: [
                 const Padding(
                   padding:
-                      EdgeInsets.symmetric(vertical: 16.0, horizontal: 48.0),
+                      EdgeInsets.symmetric(vertical: 12.0, horizontal: 48.0),
                   child: Text(
                     "Genres",
                     style: TextStyle(
@@ -143,14 +243,26 @@ class Description extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 48.0),
-                  child: Text(
-                    description,
-                    style: TextStyle(fontSize: 16),
+                  child: Wrap(
+                    spacing: 8.0,
+                    runSpacing: 4.0,
+                    children: genreNames.map((genreName) {
+                      return Chip(
+                        label: Text(
+                          genreName,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                        ),
+                        backgroundColor: getRandomColor(),
+                      );
+                    }).toList(),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 48.0, vertical: 24.0),
+                      horizontal: 48.0, vertical: 8.0),
                   child: Divider(
                     height: 1,
                   ),
@@ -169,7 +281,7 @@ class Description extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 48.0),
                   child: Text(
-                    description,
+                    widget.description,
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
@@ -179,6 +291,16 @@ class Description extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Color getRandomColor() {
+    Random random = Random();
+    return Color.fromRGBO(
+      random.nextInt(256),
+      random.nextInt(256),
+      random.nextInt(256),
+      1.0,
     );
   }
 }

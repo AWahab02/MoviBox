@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:movies_tickets_task/user%20interface/screens/watch_screen.dart';
+import 'package:movies_tickets_task/user%20interface/screens/welcome_page.dart';
 import '../themes/colors.dart';
 
 class CustomNavBar extends StatefulWidget {
-  const CustomNavBar({super.key});
+  final int curr_index;
+
+  const CustomNavBar({Key? key, required this.curr_index}) : super(key: key);
 
   @override
   State<CustomNavBar> createState() => _CustomNavBarState();
@@ -13,7 +17,24 @@ class _CustomNavBarState extends State<CustomNavBar> {
 
   void _onIconTapped(int index) {
     setState(() {
+      // Update _selectedIndex with the clicked index
       _selectedIndex = index;
+
+      switch (_selectedIndex) {
+        case 0:
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => WelcomeScreen()),
+          );
+          break;
+        case 1:
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => WatchScreen()),
+          );
+          break;
+        // Add more cases for other indices if needed
+      }
     });
   }
 
@@ -32,7 +53,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
         backgroundColor: Colors.transparent,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,
-        currentIndex: _selectedIndex,
+        currentIndex: this.widget.curr_index,
         elevation: 0,
         type: BottomNavigationBarType.fixed,
         onTap: _onIconTapped,
