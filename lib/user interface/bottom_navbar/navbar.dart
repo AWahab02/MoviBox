@@ -59,22 +59,22 @@ class _CustomNavBarState extends State<CustomNavBar> {
         onTap: _onIconTapped,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard_rounded),
+            icon: Icon(Icons.space_dashboard_rounded),
             label: 'Dashboard',
             backgroundColor: kNavBarColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.play_arrow),
+            icon: Icon(Icons.play_circle_filled_rounded),
             label: 'Watch',
             backgroundColor: kNavBarColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.perm_media_sharp),
+            icon: Icon(Icons.file_copy),
             label: 'Media Library',
             backgroundColor: kNavBarColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz_sharp),
+            icon: Icon(Icons.menu),
             label: 'More',
             backgroundColor: kNavBarColor,
           ),

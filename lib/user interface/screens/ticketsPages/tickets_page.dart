@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_tickets_task/user%20interface/screens/ticketsPages/seat_selector.dart';
 // import 'package:movie_app_task/models/movie_model.dart';
 // import 'package:movie_app_task/ui/themes/colors.dart';
 // import 'package:movie_app_task/utils/widget_extensions.dart';
-import '../themes/colors.dart';
-import '../widgets/seats_details.dart';
+import '../../themes/colors.dart';
+import '../../widgets/seats_details.dart';
 
 class TicketsScreen extends StatefulWidget {
-  const TicketsScreen({super.key});
+  const TicketsScreen({super.key, required this.title, required this.release});
 
-  // final MovieModel movie;
+  final String title, release;
 
   @override
   State<TicketsScreen> createState() => _TicketsScreenState();
@@ -25,18 +26,19 @@ class _TicketsScreenState extends State<TicketsScreen> {
         foregroundColor: Colors.black,
         backgroundColor: kAppBarBackgroundColor,
         elevation: 0,
+        centerTitle: true,
         title: Column(
           children: [
             Text(
               // widget.movie.original_title,
-              "Title",
-              style: const TextStyle(),
+              this.widget.title.toString(),
+              style: const TextStyle(fontSize: 12),
             ),
             SizedBox(height: 10),
             Text(
               // "In Theaters ${widget.movie.release_date}",
-              "In Theaters Date",
-              style: const TextStyle(color: Colors.blue),
+              "In Theaters ${widget.release}",
+              style: const TextStyle(color: Colors.blue, fontSize: 12),
             ),
           ],
         ),
@@ -123,7 +125,14 @@ class _TicketsScreenState extends State<TicketsScreen> {
                 child: CupertinoButton(
                   color: kLightBlue,
                   child: const Text("Select Seats"),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SeatSelector(
+                                title: this.widget.title,
+                                release: this.widget.release)));
+                  },
                 ),
               ),
             ),

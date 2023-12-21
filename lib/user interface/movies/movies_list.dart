@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:movies_tickets_task/user%20interface/screens/movie_description.dart';
 
 class MoviesList extends StatelessWidget {
-  final List trending;
+  final List listofMovies;
 
-  const MoviesList({Key? key, required this.trending}) : super(key: key);
+  const MoviesList({Key? key, required this.listofMovies}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // Filter the list to include only items with non-null titles
-    List filteredTrending =
-        trending.where((item) => item['title'] != null).toList();
+    List filteredlistofMovies =
+        listofMovies.where((item) => item['title'] != null).toList();
 
     return SafeArea(
       child: Container(
@@ -20,12 +20,13 @@ class MoviesList extends StatelessWidget {
           children: [
             Expanded(
               child: ListView.builder(
-                itemCount: filteredTrending.length,
+                itemCount: filteredlistofMovies.length,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
-                  String posterPath = filteredTrending[index]['poster_path'] ??
+                  String posterPath = filteredlistofMovies[index]
+                          ['poster_path'] ??
                       ''; // Use empty string if null
-                  String title = filteredTrending[index]['title'] ??
+                  String title = filteredlistofMovies[index]['title'] ??
                       'No Title'; // Use 'No Title' if null
 
                   return InkWell(
@@ -34,19 +35,22 @@ class MoviesList extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => Description(
-                                    id: trending[index]['id'].toString(),
-                                    name: trending[index]['title'],
-                                    description: trending[index]['overview'],
+                                    id: listofMovies[index]['id'].toString(),
+                                    name: listofMovies[index]['title'],
+                                    description: listofMovies[index]
+                                        ['overview'],
                                     bannerurl:
                                         'https://image.tmdb.org/t/p/w500' +
-                                            trending[index]['backdrop_path'],
+                                            listofMovies[index]
+                                                ['backdrop_path'],
                                     posterurl:
                                         'https://image.tmdb.org/t/p/w780' +
-                                            trending[index]['poster_path'],
-                                    genres: trending[index]['genre_ids'],
-                                    vote: trending[index]['vote_average']
+                                            listofMovies[index]['poster_path'],
+                                    genres: listofMovies[index]['genre_ids'],
+                                    vote: listofMovies[index]['vote_average']
                                         .toString(),
-                                    launch_on: trending[index]['release_date'],
+                                    launch_on: listofMovies[index]
+                                        ['release_date'],
                                   )));
                     },
                     child: Column(

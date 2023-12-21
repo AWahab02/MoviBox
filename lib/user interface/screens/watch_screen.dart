@@ -4,7 +4,7 @@ import 'package:movies_tickets_task/user interface/widgets/my_app_bar.dart';
 import 'package:movies_tickets_task/user%20interface/bottom_navbar/navbar.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
-import '../movies/trending.dart';
+import '../movies/movies_list.dart';
 
 class WatchScreen extends StatefulWidget {
   const WatchScreen({Key? key}) : super(key: key);
@@ -37,7 +37,7 @@ class _WatchScreenState extends State<WatchScreen> {
     if (query != null && query.isNotEmpty) {
       result = await tmdbWithLogs.v3.search.queryMovies(query);
     } else {
-      result = await tmdbWithLogs.v3.movies.getUpcoming();
+      result = await tmdbWithLogs.v3.movies.getTopRated();
     }
 
     setState(() {
@@ -83,7 +83,7 @@ class _WatchScreenState extends State<WatchScreen> {
           ],
         ),
       ),
-      body: MoviesList(trending: trendingMovies),
+      body: MoviesList(listofMovies: trendingMovies),
       bottomNavigationBar: CustomNavBar(
         curr_index: 1,
       ),
@@ -101,15 +101,6 @@ class _WatchScreenState extends State<WatchScreen> {
         decoration: InputDecoration(
           hintText: 'Search',
           border: InputBorder.none,
-          // suffixIcon: _searchController.text.isNotEmpty
-          //     ? IconButton(
-          //         icon: Icon(Icons.clear),
-          //         onPressed: () {
-          //           _searchController.clear();
-          //           loadMovies(); // Reset to show trending movies
-          //         },
-          //       )
-          //     : null,
         ),
       ),
     );

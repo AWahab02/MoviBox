@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:movies_tickets_task/user%20interface/screens/tickets_page.dart';
+import 'package:movies_tickets_task/user%20interface/screens/ticketsPages/tickets_page.dart';
 import 'package:movies_tickets_task/user%20interface/screens/watch_screen.dart';
 import 'package:movies_tickets_task/user%20interface/themes/colors.dart';
 import 'package:movies_tickets_task/models/genre_model.dart';
@@ -173,7 +173,10 @@ class _DescriptionState extends State<Description> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => TicketsScreen(),
+                                    builder: (context) => TicketsScreen(
+                                      title: this.widget.name.toString(),
+                                      release: formattedLaunchOn,
+                                    ),
                                   ),
                                 );
                               },

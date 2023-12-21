@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_tickets_task/provider/movie_provider.dart';
+import 'package:movies_tickets_task/routes/navigation_routes.dart';
 import 'package:movies_tickets_task/user%20interface/screens/watch_screen.dart';
 import 'package:movies_tickets_task/user%20interface/screens/welcome_page.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: "Poppins"),
-      home: WelcomeScreen(),
+      // home: WelcomeScreen(),
+      initialRoute: Routes.welcomePage,
+      onGenerateRoute: Routes.generateRoute,
     );
   }
 }

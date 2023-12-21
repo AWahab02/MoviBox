@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_tickets_task/user interface/themes/colors.dart';
 import 'package:movies_tickets_task/user%20interface/bottom_navbar/navbar.dart';
+import 'package:movies_tickets_task/user%20interface/movies/movies_list_genre.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 import '../movies/movies_list.dart';
 
@@ -58,7 +59,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
         ),
       ),
-      body: MoviesList(listofMovies: TopRatedMovies),
+      body: MoviesListGenre(listofMovies: TopRatedMovies),
       bottomNavigationBar: const CustomNavBar(
         curr_index: 0,
       ),
