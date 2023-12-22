@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:movies_tickets_task/user interface/themes/colors.dart';
 import 'package:movies_tickets_task/user interface/widgets/my_app_bar.dart';
 import 'package:movies_tickets_task/user%20interface/bottom_navbar/navbar.dart';
+import 'package:provider/provider.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
+import '../../provider/movie_provider.dart';
 import '../movies/movies_list.dart';
 
 class WatchScreen extends StatefulWidget {
@@ -14,7 +16,7 @@ class WatchScreen extends StatefulWidget {
 }
 
 class _WatchScreenState extends State<WatchScreen> {
-  List trendingMovies = [];
+  List searchedMovies = [];
   final String apikey = "276110cc6e09716ff6c45f16fa626c5c";
   final readaccesstoken = "YOUR_ACCESS_TOKEN_HERE";
   bool _showSearchBar = false;
@@ -23,12 +25,13 @@ class _WatchScreenState extends State<WatchScreen> {
 
   @override
   void initState() {
+    final movieprovider = Provider.of<MovieProvider>(context, listen: false);
     tmdbWithLogs = TMDB(ApiKeys(apikey, readaccesstoken),
         logConfig: ConfigLogger(
           showLogs: true,
           showErrorLogs: true,
         ));
-    loadMovies();
+    movieprovider.loadMoviesTopRated();
     super.initState();
   }
 
@@ -41,9 +44,9 @@ class _WatchScreenState extends State<WatchScreen> {
     }
 
     setState(() {
-      trendingMovies = result['results'];
+      searchedMovies = result['results'];
     });
-    print(trendingMovies);
+    print(searchedMovies);
   }
 
   @override
@@ -74,7 +77,7 @@ class _WatchScreenState extends State<WatchScreen> {
                 setState(() {
                   if (_showSearchBar) {
                     _searchController.clear();
-                    loadMovies(); // Reset to show trending movies
+                    loadMovies();
                   }
                   _showSearchBar = !_showSearchBar;
                 });
@@ -83,7 +86,17 @@ class _WatchScreenState extends State<WatchScreen> {
           ],
         ),
       ),
-      body: MoviesList(listofMovies: trendingMovies),
+      body: _showSearchBar
+          ? Consumer<MovieProvider>(
+              builder: (context, value, child) {
+                return MoviesList(listofMovies: value.searchedMovies);
+              },
+            )
+          : Consumer<MovieProvider>(
+              builder: (context, value, child) {
+                return MoviesList(listofMovies: value.TopRatedMovies);
+              },
+            ),
       bottomNavigationBar: CustomNavBar(
         curr_index: 1,
       ),
@@ -96,7 +109,8 @@ class _WatchScreenState extends State<WatchScreen> {
       child: TextField(
         controller: _searchController,
         onChanged: (query) {
-          loadMovies(query: query);
+          Provider.of<MovieProvider>(context, listen: false)
+              .loadSearchedMovies(query: query);
         },
         decoration: InputDecoration(
           hintText: 'Search',

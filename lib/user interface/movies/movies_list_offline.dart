@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:movies_tickets_task/user%20interface/screens/movie_description.dart';
 
-class MoviesList extends StatelessWidget {
+class MoviesListOffline extends StatelessWidget {
   final List listofMovies;
 
-  const MoviesList({Key? key, required this.listofMovies}) : super(key: key);
+  const MoviesListOffline({Key? key, required this.listofMovies})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +22,8 @@ class MoviesList extends StatelessWidget {
                 itemCount: filteredlistofMovies.length,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
-                  try {
-                    String posterPath = filteredlistofMovies[index]
-                            ['poster_path'] ??
-                        ''; // Use empty string if null
-                    String title = filteredlistofMovies[index]['title'] ??
-                        'No Title'; // Use 'No Title' if null
-                  } catch (e, s) {
-                    print(e);
-                    print(s);
-                  }
-                  String posterPath = filteredlistofMovies[index]
-                          ['poster_path'] ??
-                      ''; // Use empty string if null
-                  String title = filteredlistofMovies[index]['title'] ??
+                  String posterPath = ""; // Use empty string if null
+                  String title = filteredlistofMovies[index].original_title ??
                       'No Title'; // Use 'No Title' if null
 
                   return InkWell(
@@ -43,23 +32,15 @@ class MoviesList extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => Description(
-                                    id: listofMovies[index]['id'].toString(),
-                                    name: listofMovies[index]['title'],
-                                    description: listofMovies[index]
-                                        ['overview'],
-                                    bannerurl:
-                                        'https://image.tmdb.org/t/p/w500' +
-                                            listofMovies[index]
-                                                ['backdrop_path'],
-                                    posterurl:
-                                        'https://image.tmdb.org/t/p/w780' +
-                                            listofMovies[index]['poster_path'],
-                                    genres: listofMovies[index]['genre_ids'],
-                                    vote: listofMovies[index]['vote_average']
-                                        .toString(),
-                                    launch_on: listofMovies[index]
-                                        ['release_date'],
-                                  )));
+                                  id: listofMovies[index].id.toString(),
+                                  name: listofMovies[index].original_title,
+                                  description: listofMovies[index].overview,
+                                  bannerurl: "",
+                                  posterurl: "",
+                                  genres: [],
+                                  vote: "",
+                                  launch_on:
+                                      listofMovies[index].release_date)));
                     },
                     child: Column(
                       children: [
@@ -73,13 +54,6 @@ class MoviesList extends StatelessWidget {
                             width: double.infinity,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.0),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  'https://image.tmdb.org/t/p/w500' +
-                                      posterPath,
-                                ),
-                                fit: BoxFit.cover,
-                              ),
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.end,

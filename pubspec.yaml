@@ -41,6 +41,12 @@ dependencies:
   intl: ^0.18.1
   youtube_player_flutter: ^8.1.2
   http: ^0.13.6
+  floor: ^1.4.2
+  floor_generator: ^1.4.2
+  build_runner: ^2.3.3
+  sqflite: ^2.2.8+4
+  internet_connection_checker: ^1.0.0+1
+  connectivity_plus: ^5.0.2
 
 dev_dependencies:
   flutter_test:

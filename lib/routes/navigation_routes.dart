@@ -15,8 +15,11 @@ class Routes {
       case Routes.watchScreen:
         return MaterialPageRoute(builder: (_) => const WatchScreen());
       case Routes.ticketsScreen:
-      // return MaterialPageRoute(
-      //     builder: (_) => TicketsScreen(data: settings.arguments as Map));
+        return MaterialPageRoute(
+            builder: (_) => TicketsScreen(
+                  title: 'me',
+                  release: "2020",
+                ));
       default:
         return _errorRoute();
     }

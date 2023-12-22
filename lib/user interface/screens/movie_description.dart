@@ -107,10 +107,12 @@ class _DescriptionState extends State<Description> {
                     child: Container(
                       height: double.infinity,
                       width: MediaQuery.of(context).size.width,
-                      child: Image.network(
-                        widget.posterurl,
-                        fit: BoxFit.cover,
-                      ),
+                      child: widget.posterurl.isNotEmpty
+                          ? Image.network(
+                              widget.posterurl,
+                              fit: BoxFit.cover,
+                            )
+                          : null,
                     ),
                   ),
                   Positioned(

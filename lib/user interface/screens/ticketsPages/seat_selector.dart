@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:movies_tickets_task/provider/seats_provider.dart';
+import 'package:provider/provider.dart';
 import '../../themes/colors.dart';
 
 class SeatSelector extends StatefulWidget {
@@ -14,7 +16,7 @@ class SeatSelector extends StatefulWidget {
 
 class _SeatSelectorState extends State<SeatSelector> {
   late List<List<Color>> seatColors;
-  int totalPrice = 0;
+  // int totalPrice = 0;
 
   @override
   void initState() {
@@ -38,24 +40,10 @@ class _SeatSelectorState extends State<SeatSelector> {
     }
   }
 
-  void updateTotalPrice() {
-    int selectedSeatsCount = 0;
-
-    for (int i = 0; i < seatColors.length; i++) {
-      for (int j = 0; j < seatColors[0].length; j++) {
-        if (seatColors[i][j] == kSelected) {
-          selectedSeatsCount++;
-        }
-      }
-    }
-
-    setState(() {
-      totalPrice = selectedSeatsCount * 50; // $50 per selected seat
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final seatProvider = Provider.of<seatsProvider>(context, listen: false);
+    String totalprice = seatsProvider().totalprice.toString();
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: AppBar(
@@ -113,8 +101,7 @@ class _SeatSelectorState extends State<SeatSelector> {
                   return GestureDetector(
                     onTap: () {
                       setState(() {
-                        seatColors[row][col] = kSelected;
-                        updateTotalPrice();
+                        seatProvider.updateTotalPrice(row, col, seatColors);
                       });
                     },
                     child: Container(
@@ -191,12 +178,14 @@ class _SeatSelectorState extends State<SeatSelector> {
                     style:
                         ElevatedButton.styleFrom(backgroundColor: kUnavailable),
                     onPressed: () {},
-                    child: Text(
-                      'Total Price: \$${totalPrice.toString()}',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                    child: Consumer<seatsProvider>(
+                      builder: (context, seatsProvider, _) => Text(
+                        'Total Price: \$${seatsProvider.totalprice.toString()}',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
