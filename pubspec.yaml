@@ -49,6 +49,7 @@ dependencies:
   connectivity_plus: ^5.0.2
   dotenv: ^4.2.0
   flutter_dotenv: ^5.1.0
+  mockito: ^5.4.0
 
 dev_dependencies:
   flutter_test:
