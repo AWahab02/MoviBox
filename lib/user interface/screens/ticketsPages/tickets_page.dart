@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_tickets_task/user%20interface/screens/ticketsPages/seat_selector.dart';
-// import 'package:movie_app_task/models/movie_model.dart';
-// import 'package:movie_app_task/ui/themes/colors.dart';
-// import 'package:movie_app_task/utils/widget_extensions.dart';
 import '../../themes/colors.dart';
 import '../../widgets/seats_details.dart';
+import '../../widgets/tickets_date_widget.dart';
 
 class TicketsScreen extends StatefulWidget {
   const TicketsScreen({super.key, required this.title, required this.release});
@@ -31,10 +29,10 @@ class _TicketsScreenState extends State<TicketsScreen> {
           children: [
             Text(
               // widget.movie.original_title,
-              this.widget.title.toString(),
+              widget.title.toString(),
               style: const TextStyle(fontSize: 12),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               // "In Theaters ${widget.movie.release_date}",
               "In Theaters ${widget.release}",
@@ -50,70 +48,23 @@ class _TicketsScreenState extends State<TicketsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(child: Container()),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             const Text(
               "Date",
               style: TextStyle(color: Colors.black, fontSize: 20),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
+            const ticketsPage_date_widget(),
+            const SizedBox(height: 20),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ActionChip(
-                    labelPadding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    label: const Text("5 Mar"),
-                    onPressed: () {},
-                  ),
+                children: const [
+                  SeatsOptionCardWidget(),
                   SizedBox(width: 10),
-                  ActionChip(
-                    labelPadding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    label: const Text("6 Mar"),
-                    onPressed: () {},
-                  ),
+                  SeatsOptionCardWidget(),
                   SizedBox(width: 10),
-                  ActionChip(
-                    labelPadding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    label: const Text("7 Mar"),
-                    onPressed: () {},
-                  ),
-                  SizedBox(width: 10),
-                  ActionChip(
-                    labelPadding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    label: const Text("8 Mar"),
-                    onPressed: () {},
-                  ),
-                  SizedBox(width: 10),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  const SeatsOptionCardWidget(),
-                  SizedBox(width: 10),
-                  const SeatsOptionCardWidget(),
-                  SizedBox(width: 10),
-                  const SeatsOptionCardWidget(),
+                  SeatsOptionCardWidget(),
                 ],
               ),
             ),
@@ -130,8 +81,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => SeatSelector(
-                                title: this.widget.title,
-                                release: this.widget.release)));
+                                title: widget.title, release: widget.release)));
                   },
                 ),
               ),

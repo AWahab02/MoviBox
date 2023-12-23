@@ -14,23 +14,21 @@ class SeatsOptionCardWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          children: [
-            const Text(
+          children: const [
+            Text(
               "12:30 ",
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
             ),
             SizedBox(width: 10),
-            const Text(
+            Text(
               "CinTech + Hall 1",
               style: TextStyle(
                   color: Colors.blueGrey, fontWeight: FontWeight.w200),
             ),
           ],
         ),
-        // bold 12:30 grey cintech
-
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         GestureDetector(
           onTap: () {},
           child: Container(
@@ -48,30 +46,28 @@ class SeatsOptionCardWidget extends StatelessWidget {
             ),
           ),
         ),
-
-        SizedBox(height: 10),
-
+        const SizedBox(height: 10),
         Row(
-          children: [
-            const Text(
+          children: const [
+            Text(
               "From",
               style: TextStyle(
                   color: Colors.blueGrey, fontWeight: FontWeight.w200),
             ),
             SizedBox(width: 5),
-            const Text(
+            Text(
               "50",
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.w800),
             ),
             SizedBox(width: 5),
-            const Text(
+            Text(
               "or",
               style: TextStyle(
                   color: Colors.blueGrey, fontWeight: FontWeight.w200),
             ),
             SizedBox(width: 5),
-            const Text(
+            Text(
               "100 bonus",
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.w800),

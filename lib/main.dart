@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movies_tickets_task/provider/movie_provider.dart';
 import 'package:movies_tickets_task/provider/seats_provider.dart';
 import 'package:movies_tickets_task/routes/navigation_routes.dart';
-import 'package:movies_tickets_task/user%20interface/screens/watch_screen.dart';
-import 'package:movies_tickets_task/user%20interface/screens/welcome_page.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  await dotenv.load();
   runApp(
     ChangeNotifierProvider(
       create: (context) => MovieProvider(),
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }

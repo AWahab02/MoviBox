@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:tmdb_api/tmdb_api.dart';
@@ -105,38 +103,9 @@ class MovieProvider with ChangeNotifier {
   void getMoviesFromDb() async {
     final database =
         await $FloorLocalDatabase.databaseBuilder('moviesDatabase.db').build();
-    print("heloooooooo");
     final movieDao = database.movieDao;
-    // print((await movieDao.findAllMovies())[0].original_title);
     List<MovieDatabaseModel> moviesToShowList = await movieDao.findAllMovies();
     moviesToShow = moviesToShowList;
-    // print("moviestoshow_________________________");
-    // print(moviesToShowList);
-    // int i = 0;
-
-    // [
-    // {"title":title},    movies[0]["title"]
-    // ,
-    // ,
-    // ,
-    // ]
-
-    // upcomingMovies = moviesToShowList.map(
-    //   (movie) {
-    //     return {
-    //       "id": movie.id,
-    //       "title": movie.original_title,
-    //       "overview": movie.overview,
-    //       "release_date": movie.release_date,
-    //       "poster_path": "",
-    //       "genre_ids": <dynamic>[],
-    //       "vote_average": "",
-    //     };
-    //   },
-    // ).toList();
-
-    // upcomingMovies = moviesToShowList;
-    // print(upcomingMovies);
     notifyListeners();
   }
 }

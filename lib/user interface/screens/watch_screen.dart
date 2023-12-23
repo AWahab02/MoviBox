@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movies_tickets_task/user interface/themes/colors.dart';
-import 'package:movies_tickets_task/user interface/widgets/my_app_bar.dart';
 import 'package:movies_tickets_task/user%20interface/bottom_navbar/navbar.dart';
 import 'package:provider/provider.dart';
 import 'package:tmdb_api/tmdb_api.dart';
@@ -17,17 +17,18 @@ class WatchScreen extends StatefulWidget {
 
 class _WatchScreenState extends State<WatchScreen> {
   List searchedMovies = [];
-  final String apikey = "276110cc6e09716ff6c45f16fa626c5c";
-  final readaccesstoken = "YOUR_ACCESS_TOKEN_HERE";
+  late String apikey;
+  final readaccesstoken = "";
   bool _showSearchBar = false;
   late TMDB tmdbWithLogs;
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     final movieprovider = Provider.of<MovieProvider>(context, listen: false);
+    apikey = dotenv.env['API_KEY'] ?? "";
     tmdbWithLogs = TMDB(ApiKeys(apikey, readaccesstoken),
-        logConfig: ConfigLogger(
+        logConfig: const ConfigLogger(
           showLogs: true,
           showErrorLogs: true,
         ));
@@ -97,7 +98,7 @@ class _WatchScreenState extends State<WatchScreen> {
                 return MoviesList(listofMovies: value.TopRatedMovies);
               },
             ),
-      bottomNavigationBar: CustomNavBar(
+      bottomNavigationBar: const CustomNavBar(
         curr_index: 1,
       ),
     );
@@ -105,14 +106,14 @@ class _WatchScreenState extends State<WatchScreen> {
 
   Widget _buildSearchBar() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextField(
         controller: _searchController,
         onChanged: (query) {
           Provider.of<MovieProvider>(context, listen: false)
               .loadSearchedMovies(query: query);
         },
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: 'Search',
           border: InputBorder.none,
         ),

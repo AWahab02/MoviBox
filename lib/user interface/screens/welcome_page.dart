@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movies_tickets_task/provider/movie_provider.dart';
 import 'package:movies_tickets_task/user interface/themes/colors.dart';
 import 'package:movies_tickets_task/user%20interface/bottom_navbar/navbar.dart';
@@ -16,14 +17,15 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   // List TopRatedMovies = [];
-  final String apikey = "276110cc6e09716ff6c45f16fa626c5c";
-  final readaccesstoken = "YOUR_ACCESS_TOKEN_HERE";
+  late String apikey;
+  final readaccesstoken = "";
   late TMDB tmdbWithLogs;
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     final movieprovider = Provider.of<MovieProvider>(context, listen: false);
+    apikey = dotenv.env['API_KEY'] ?? "";
     movieprovider.tmdbWithLogs = TMDB(ApiKeys(apikey, readaccesstoken),
         logConfig: const ConfigLogger(
           showLogs: true,

@@ -4,7 +4,7 @@ class SeatLegend extends StatelessWidget {
   final Color color;
   final String text;
 
-  const SeatLegend({required this.color, required this.text});
+  const SeatLegend({super.key, required this.color, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class SeatLegend extends StatelessWidget {
           height: 20,
           color: color,
         ),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         Text(text),
       ],
     );

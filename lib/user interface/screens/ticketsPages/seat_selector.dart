@@ -55,10 +55,10 @@ class _SeatSelectorState extends State<SeatSelector> {
         title: Column(
           children: [
             Text(
-              this.widget.title,
+              widget.title,
               style: const TextStyle(fontSize: 12),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               "In Theaters ${widget.release}",
               style: const TextStyle(color: Colors.blue, fontSize: 12),
@@ -71,23 +71,23 @@ class _SeatSelectorState extends State<SeatSelector> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Screen',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Divider(
+            const Divider(
               height: 1,
               thickness: 1,
               color: kNavBarColor,
             ),
-            SizedBox(height: 16),
-            Container(
+            const SizedBox(height: 16),
+            SizedBox(
               height: 350,
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 10,
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
@@ -113,7 +113,7 @@ class _SeatSelectorState extends State<SeatSelector> {
                       child: Center(
                         child: Text(
                           '${row + 1}-${col + 1}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
@@ -134,20 +134,20 @@ class _SeatSelectorState extends State<SeatSelector> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [
+                children: const [
                   SeatLegend(color: kVIP, text: 'VIP (150\$)'),
                   SizedBox(width: 20),
                   SeatLegend(color: kGetTickets, text: 'Regular (50\$)'),
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -155,7 +155,7 @@ class _SeatSelectorState extends State<SeatSelector> {
                   style:
                       ElevatedButton.styleFrom(backgroundColor: kUnavailable),
                   onPressed: () {},
-                  child: Text(
+                  child: const Text(
                     "4/3 row",
                     style: TextStyle(
                       fontSize: 16,
@@ -166,10 +166,10 @@ class _SeatSelectorState extends State<SeatSelector> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -181,7 +181,7 @@ class _SeatSelectorState extends State<SeatSelector> {
                     child: Consumer<seatsProvider>(
                       builder: (context, seatsProvider, _) => Text(
                         'Total Price: \$${seatsProvider.totalprice.toString()}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -190,7 +190,7 @@ class _SeatSelectorState extends State<SeatSelector> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Expanded(
@@ -217,7 +217,7 @@ class SeatLegend extends StatelessWidget {
   final Color color;
   final String text;
 
-  const SeatLegend({required this.color, required this.text});
+  const SeatLegend({super.key, required this.color, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -228,7 +228,7 @@ class SeatLegend extends StatelessWidget {
           height: 20,
           color: color,
         ),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         Text(text),
       ],
     );

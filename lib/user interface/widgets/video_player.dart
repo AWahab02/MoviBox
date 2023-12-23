@@ -4,7 +4,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class VideoPlayerPage extends StatefulWidget {
   final String videoKey;
 
-  const VideoPlayerPage(this.videoKey);
+  const VideoPlayerPage(this.videoKey, {super.key});
 
   @override
   _VideoPlayerPageState createState() => _VideoPlayerPageState();
@@ -19,7 +19,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
     _controller = YoutubePlayerController(
       initialVideoId: widget.videoKey,
-      flags: YoutubePlayerFlags(
+      flags: const YoutubePlayerFlags(
         autoPlay: true,
         mute: false,
       ),
@@ -47,7 +47,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
             ),
           ),
           Positioned(
-            top: 60, // Adjusted top position
+            top: 60,
             right: 16,
             child: ElevatedButton(
               onPressed: () {
@@ -55,15 +55,15 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.transparent,
-                onPrimary: Colors.white,
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.transparent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
-                  side: BorderSide(color: Colors.white),
+                  side: const BorderSide(color: Colors.white),
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text("Done"),
               ),
             ),

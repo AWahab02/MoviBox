@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:movies_tickets_task/user%20interface/screens/ticketsPages/tickets_page.dart';
-import 'package:movies_tickets_task/user%20interface/screens/watch_screen.dart';
 import 'package:movies_tickets_task/user%20interface/themes/colors.dart';
 import 'package:movies_tickets_task/models/genre_model.dart';
 import 'package:http/http.dart' as http;
@@ -36,10 +36,10 @@ class _DescriptionState extends State<Description> {
   late List<dynamic> videos;
   String key = "";
 
-  YoutubePlayerController _youtubeController = YoutubePlayerController(
+  final YoutubePlayerController _youtubeController = YoutubePlayerController(
     initialVideoId:
         'YOUR_INITIAL_VIDEO_ID', // Placeholder value, it will be replaced dynamically
-    flags: YoutubePlayerFlags(
+    flags: const YoutubePlayerFlags(
       autoPlay: true,
       mute: false,
     ),
@@ -50,7 +50,7 @@ class _DescriptionState extends State<Description> {
   }
 
   Future<void> fetchMovieVideos() async {
-    final String apiKey = "276110cc6e09716ff6c45f16fa626c5c";
+    String apiKey = dotenv.env['API_KEY'] ?? "";
     final String apiUrl =
         "http://api.themoviedb.org/3/movie/${widget.id}/videos?api_key=$apiKey";
 
@@ -89,9 +89,6 @@ class _DescriptionState extends State<Description> {
   @override
   Widget build(BuildContext context) {
     final List<String> genreNames = getGenreNames(widget.genres);
-    print(widget.id);
-    print("keyyyyy");
-    print(key);
     final formattedLaunchOn =
         DateFormat('MMMM dd, yyyy').format(DateTime.parse(widget.launch_on));
 
@@ -99,12 +96,12 @@ class _DescriptionState extends State<Description> {
       body: Container(
         child: ListView(
           children: [
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.6,
               child: Stack(
                 children: [
                   Positioned(
-                    child: Container(
+                    child: SizedBox(
                       height: double.infinity,
                       width: MediaQuery.of(context).size.width,
                       child: widget.posterurl.isNotEmpty
@@ -150,11 +147,11 @@ class _DescriptionState extends State<Description> {
                             color: Colors.black.withOpacity(0.4),
                             spreadRadius: 10,
                             blurRadius: 8,
-                            offset: Offset(0, -3),
+                            offset: const Offset(0, -3),
                           ),
                         ],
                       ),
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                         top: 16,
                         bottom: 24,
                       ),
@@ -163,20 +160,20 @@ class _DescriptionState extends State<Description> {
                           children: [
                             Text(
                               "In Theatres $formattedLaunchOn",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             ElevatedButton(
                               onPressed: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => TicketsScreen(
-                                      title: this.widget.name.toString(),
+                                      title: widget.name.toString(),
                                       release: formattedLaunchOn,
                                     ),
                                   ),
@@ -187,7 +184,7 @@ class _DescriptionState extends State<Description> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),
-                                minimumSize: Size(220, 50),
+                                minimumSize: const Size(220, 50),
                               ),
                               child: const Text(
                                 "Get Tickets",
@@ -208,11 +205,11 @@ class _DescriptionState extends State<Description> {
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.transparent,
-                                side: BorderSide(color: kGetTickets),
+                                side: const BorderSide(color: kGetTickets),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),
-                                minimumSize: Size(220, 50),
+                                minimumSize: const Size(220, 50),
                               ),
                               icon: const Icon(
                                 Icons.play_arrow,
@@ -255,7 +252,7 @@ class _DescriptionState extends State<Description> {
                       return Chip(
                         label: Text(
                           genreName,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14,
                             color: Colors.white,
                           ),
@@ -265,9 +262,9 @@ class _DescriptionState extends State<Description> {
                     }).toList(),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 48.0, vertical: 8.0),
+                const Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 48.0, vertical: 8.0),
                   child: Divider(
                     height: 1,
                   ),
@@ -287,10 +284,10 @@ class _DescriptionState extends State<Description> {
                   padding: const EdgeInsets.symmetric(horizontal: 48.0),
                   child: Text(
                     widget.description,
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
               ],
             ),
           ],
