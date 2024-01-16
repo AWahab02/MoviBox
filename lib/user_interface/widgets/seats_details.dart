@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-// import 'package:movie_app_task/utils/widget_extensions.dart';
 
 import '../themes/colors.dart';
 
 class SeatsOptionCardWidget extends StatelessWidget {
   const SeatsOptionCardWidget({
-    super.key,
-  });
+    Key? key,
+    required this.time,
+    required this.hall,
+    required this.selected,
+    required this.onSelect,
+  }) : super(key: key);
+
+  final String time, hall;
+  final bool selected;
+  final VoidCallback onSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -14,30 +21,36 @@ class SeatsOptionCardWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          children: const [
+          children: [
             Text(
-              "12:30 ",
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+              time,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Text(
-              "CinTech + Hall 1",
-              style: TextStyle(
-                  color: Colors.blueGrey, fontWeight: FontWeight.w200),
+              hall,
+              style: const TextStyle(
+                color: Colors.blueGrey,
+                fontWeight: FontWeight.w200,
+              ),
             ),
           ],
         ),
         const SizedBox(height: 10),
         GestureDetector(
-          onTap: () {},
+          onTap: onSelect,
           child: Container(
             height: 150,
             width: 250,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: kLightBlue),
+              border: Border.all(
+                color: selected ? kLightBlue : Colors.white,
+                width: 2.0,
+              ),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Image.asset(
@@ -52,25 +65,33 @@ class SeatsOptionCardWidget extends StatelessWidget {
             Text(
               "From",
               style: TextStyle(
-                  color: Colors.blueGrey, fontWeight: FontWeight.w200),
+                color: Colors.blueGrey,
+                fontWeight: FontWeight.w200,
+              ),
             ),
             SizedBox(width: 5),
             Text(
               "50",
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w800),
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w800,
+              ),
             ),
             SizedBox(width: 5),
             Text(
               "or",
               style: TextStyle(
-                  color: Colors.blueGrey, fontWeight: FontWeight.w200),
+                color: Colors.blueGrey,
+                fontWeight: FontWeight.w200,
+              ),
             ),
             SizedBox(width: 5),
             Text(
               "100 bonus",
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w800),
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w800,
+              ),
             ),
           ],
         ),

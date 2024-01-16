@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../themes/colors.dart';
 import '../../widgets/seats_details.dart';
-import '../../widgets/tickets_date_widget.dart';
 import './seat_selector.dart';
 
 class TicketsScreen extends StatefulWidget {
@@ -15,8 +15,20 @@ class TicketsScreen extends StatefulWidget {
 }
 
 class _TicketsScreenState extends State<TicketsScreen> {
+  int selectedDateIndex = 0;
+  String selectedHall = '';
+  List<bool> selection = [false, false, false];
+
   @override
   Widget build(BuildContext context) {
+    // Generate a list of dates from today until the end of the month
+    DateTime now = DateTime.now();
+    int daysInMonth = DateTime(now.year, now.month + 1, 0).day;
+    List<String> dateList = List.generate(daysInMonth, (index) {
+      DateTime date = DateTime(now.year, now.month, index + 1);
+      return DateFormat('MMM d').format(date);
+    });
+
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: AppBar(
@@ -28,13 +40,11 @@ class _TicketsScreenState extends State<TicketsScreen> {
         title: Column(
           children: [
             Text(
-              // widget.movie.original_title,
               widget.title.toString(),
               style: const TextStyle(fontSize: 12),
             ),
             const SizedBox(height: 10),
             Text(
-              // "In Theaters ${widget.movie.release_date}",
               "In Theaters ${widget.release}",
               style: const TextStyle(color: Colors.blue, fontSize: 12),
             ),
@@ -54,17 +64,86 @@ class _TicketsScreenState extends State<TicketsScreen> {
               style: TextStyle(color: Colors.black, fontSize: 20),
             ),
             const SizedBox(height: 10),
-            const ticketsPage_date_widget(),
+            // Horizontally scrollable date picker
+            SizedBox(
+              height: 40,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: dateList.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          selectedDateIndex = index;
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: index == selectedDateIndex
+                              ? kGetTickets
+                              : Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: kGetTickets,
+                            width: 1.0,
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            dateList[index],
+                            style: TextStyle(
+                              color: index == selectedDateIndex
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
             const SizedBox(height: 20),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: const [
-                  SeatsOptionCardWidget(),
-                  SizedBox(width: 10),
-                  SeatsOptionCardWidget(),
-                  SizedBox(width: 10),
-                  SeatsOptionCardWidget(),
+                children: [
+                  SeatsOptionCardWidget(
+                    hall: 'CinTech + Hall 1',
+                    time: '12:30',
+                    selected: selectedHall == 'CinTech + Hall 1',
+                    onSelect: () {
+                      setState(() {
+                        selectedHall = 'CinTech + Hall 1';
+                      });
+                    },
+                  ),
+                  const SizedBox(width: 10),
+                  SeatsOptionCardWidget(
+                    hall: 'CinTech + Hall 2',
+                    time: '13:30',
+                    selected: selectedHall == 'CinTech + Hall 2',
+                    onSelect: () {
+                      setState(() {
+                        selectedHall = 'CinTech + Hall 2';
+                      });
+                    },
+                  ),
+                  const SizedBox(width: 10),
+                  SeatsOptionCardWidget(
+                    hall: 'CinTech + Hall 3',
+                    time: '14:30',
+                    selected: selectedHall == 'CinTech + Hall 3',
+                    onSelect: () {
+                      setState(() {
+                        selectedHall = 'CinTech + Hall 3';
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
@@ -78,10 +157,16 @@ class _TicketsScreenState extends State<TicketsScreen> {
                   child: const Text("Select Seats"),
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SeatSelector(
-                                title: widget.title, release: widget.release)));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SeatSelector(
+                          title: widget.title,
+                          release: widget.release,
+                          time: (selectedDateIndex + 1).toString(),
+                          hall: selectedHall,
+                        ),
+                      ),
+                    );
                   },
                 ),
               ),

@@ -1,4 +1,3 @@
-
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:movies_tickets_task/provider/seats_provider.dart';
@@ -6,10 +5,15 @@ import 'package:provider/provider.dart';
 import '../../themes/colors.dart';
 
 class SeatSelector extends StatefulWidget {
-  const SeatSelector({Key? key, required this.title, required this.release})
+  const SeatSelector(
+      {Key? key,
+      required this.title,
+      required this.release,
+      required this.hall,
+      required this.time})
       : super(key: key);
 
-  final String title, release;
+  final String title, release, hall, time;
 
   @override
   State<SeatSelector> createState() => _SeatSelectorState();
@@ -61,8 +65,8 @@ class _SeatSelectorState extends State<SeatSelector> {
             ),
             const SizedBox(height: 10),
             Text(
-              "In Theaters ${widget.release}",
-              style: const TextStyle(color: Colors.blue, fontSize: 12),
+              "In Theaters ${widget.release} | ${widget.time} Jan  ${widget.hall}",
+              style: const TextStyle(color: Colors.blue, fontSize: 10),
             ),
           ],
         ),
