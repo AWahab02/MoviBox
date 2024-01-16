@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:movies_tickets_task/user%20interface/screens/watch_screen.dart';
-import 'package:movies_tickets_task/user%20interface/screens/welcome_page.dart';
+import 'package:movies_tickets_task/user_interface/screens/media_library.dart';
+import 'package:movies_tickets_task/user_interface/screens/more.dart';
+import 'package:movies_tickets_task/user_interface/screens/watch_screen.dart';
+import 'package:movies_tickets_task/user_interface/screens/welcome_page.dart';
 import '../themes/colors.dart';
 
 class CustomNavBar extends StatefulWidget {
@@ -24,13 +26,25 @@ class _CustomNavBarState extends State<CustomNavBar> {
         case 0:
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => WelcomeScreen()),
+            MaterialPageRoute(builder: (context) => const WelcomeScreen()),
           );
           break;
         case 1:
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => WatchScreen()),
+            MaterialPageRoute(builder: (context) => const WatchScreen()),
+          );
+          break;
+        case 2:
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const MediaLibraryPage()),
+          );
+          break;
+        case 3:
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const MorePage()),
           );
           break;
         // Add more cases for other indices if needed
@@ -53,7 +67,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
         backgroundColor: Colors.transparent,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,
-        currentIndex: this.widget.curr_index,
+        currentIndex: widget.curr_index,
         elevation: 0,
         type: BottomNavigationBarType.fixed,
         onTap: _onIconTapped,
@@ -70,7 +84,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.file_copy),
-            label: 'Media Library',
+            label: 'Discover',
             backgroundColor: kNavBarColor,
           ),
           BottomNavigationBarItem(

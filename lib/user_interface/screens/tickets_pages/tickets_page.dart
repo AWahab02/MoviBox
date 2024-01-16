@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_tickets_task/user%20interface/screens/ticketsPages/seat_selector.dart';
 import '../../themes/colors.dart';
 import '../../widgets/seats_details.dart';
 import '../../widgets/tickets_date_widget.dart';
+import './seat_selector.dart';
 
 class TicketsScreen extends StatefulWidget {
   const TicketsScreen({super.key, required this.title, required this.release});

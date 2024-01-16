@@ -1,3 +1,4 @@
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:movies_tickets_task/provider/seats_provider.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:movies_tickets_task/user interface/themes/colors.dart';
-import 'package:movies_tickets_task/user%20interface/bottom_navbar/navbar.dart';
+import 'package:movies_tickets_task/user_interface/themes/colors.dart';
+import 'package:movies_tickets_task/user_interface/bottom_navbar/navbar.dart';
 import 'package:provider/provider.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 

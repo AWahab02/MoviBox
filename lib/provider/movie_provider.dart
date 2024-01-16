@@ -16,7 +16,11 @@ class MovieProvider with ChangeNotifier {
 
   List moviesToShow = [];
 
+  List genreMovies = [];
+
   List searchedMovies = [];
+
+  List<Card> history = [];
 
   bool showSearchBar = false;
 
@@ -25,6 +29,21 @@ class MovieProvider with ChangeNotifier {
 
   void updateTrending(List newTrending) {
     _trending = newTrending;
+  }
+
+  void addToHistory(Card movie) {
+    if (!history.contains(movie)) {
+      history.add(movie);
+      notifyListeners();
+    }
+  }
+
+  Future<List<dynamic>> loadgenreMovies({String? genreId}) async {
+    Map result = await tmdbWithLogs.v3.discover.getMovies(withGenres: genreId);
+
+    genreMovies = result['results'];
+    notifyListeners();
+    return genreMovies; // Return the List<dynamic>
   }
 
   loadMoviesTopRated({String? query}) async {

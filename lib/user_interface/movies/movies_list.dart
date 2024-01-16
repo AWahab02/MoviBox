@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movies_tickets_task/user%20interface/screens/movie_description.dart';
+import 'package:movies_tickets_task/user_interface/screens/movie_description.dart';
+
+List history = [];
 
 class MoviesList extends StatelessWidget {
   final List listofMovies;
@@ -39,6 +41,7 @@ class MoviesList extends StatelessWidget {
 
                   return InkWell(
                     onTap: () {
+                      history.add(filteredlistofMovies[index]);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -75,8 +78,7 @@ class MoviesList extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15.0),
                               image: DecorationImage(
                                 image: NetworkImage(
-                                  'https://image.tmdb.org/t/p/w500' +
-                                      posterPath,
+                                  'https://image.tmdb.org/t/p/w500$posterPath',
                                 ),
                                 fit: BoxFit.cover,
                               ),

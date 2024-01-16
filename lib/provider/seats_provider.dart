@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../user interface/themes/colors.dart';
+import '../user_interface/themes/colors.dart';
 
 class seatsProvider with ChangeNotifier {
   int _totalprice = 0;

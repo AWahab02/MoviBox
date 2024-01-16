@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:movies_tickets_task/user%20interface/screens/ticketsPages/tickets_page.dart';
+import 'package:movies_tickets_task/user_interface/screens/tickets_pages/tickets_page.dart';
 
 void main() {
   testWidgets('TicketsScreen widget test', (WidgetTester tester) async {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_tickets_task/user%20interface/screens/movie_description.dart';
+import 'package:movies_tickets_task/user_interface/screens/movie_description.dart';
 
 class MoviesListOffline extends StatelessWidget {
   final List listofMovies;
@@ -37,7 +37,7 @@ class MoviesListOffline extends StatelessWidget {
                                   description: listofMovies[index].overview,
                                   bannerurl: "",
                                   posterurl: "",
-                                  genres: [],
+                                  genres: const [],
                                   vote: "",
                                   launch_on:
                                       listofMovies[index].release_date)));
