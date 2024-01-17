@@ -100,13 +100,7 @@ class _SignupPageState extends State<SignupPage> {
                                   MaterialPageRoute(
                                       builder: (context) => const LoginPage()));
                             });
-                            //   _storePhoneNumber(phoneController.text.toString());
-                            //   Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //           builder: (context) => LoginPage()));
-                            // }).onError((error, stackTrace) {
-                            // Utils().toastMessage(error.toString());
+
                             // setState(() {
                             //   loading = false;
                             // });

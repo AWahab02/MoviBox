@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_tickets_task/provider/seats_provider.dart';
 import 'package:provider/provider.dart';
 import '../../themes/colors.dart';
+import '../welcome_page.dart';
 
 class SeatSelector extends StatefulWidget {
   const SeatSelector(
@@ -21,7 +22,6 @@ class SeatSelector extends StatefulWidget {
 
 class _SeatSelectorState extends State<SeatSelector> {
   late List<List<Color>> seatColors;
-  // int totalPrice = 0;
 
   @override
   void initState() {
@@ -202,7 +202,10 @@ class _SeatSelectorState extends State<SeatSelector> {
                   child: ElevatedButton(
                     style:
                         ElevatedButton.styleFrom(backgroundColor: kGetTickets),
-                    onPressed: () {},
+                    onPressed: () {
+                      seatProvider.settotalprice(0);
+                      _showPaymentDialog();
+                    },
                     child: const Text(
                       'Proceed to pay',
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -214,6 +217,34 @@ class _SeatSelectorState extends State<SeatSelector> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showPaymentDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Payment Successful'),
+          content: const Text('Thank you for your payment!'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                _navigateToWelcomeScreen(); // Navigate to the WelcomeScreen
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _navigateToWelcomeScreen() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const WelcomeScreen()),
     );
   }
 }

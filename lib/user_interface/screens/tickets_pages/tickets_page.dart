@@ -156,17 +156,28 @@ class _TicketsScreenState extends State<TicketsScreen> {
                   color: kLightBlue,
                   child: const Text("Select Seats"),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SeatSelector(
-                          title: widget.title,
-                          release: widget.release,
-                          time: (selectedDateIndex + 1).toString(),
-                          hall: selectedHall,
+                    if (selectedHall.isNotEmpty) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SeatSelector(
+                            title: widget.title,
+                            release: widget.release,
+                            time: (selectedDateIndex + 1).toString(),
+                            hall: selectedHall,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    } else {
+                      // Display an error message
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content:
+                              Text('Please select a hall before proceeding.'),
+                          duration: Duration(seconds: 3),
+                        ),
+                      );
+                    }
                   },
                 ),
               ),

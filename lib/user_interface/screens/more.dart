@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../bottom_navbar/navbar.dart';
 import '../themes/colors.dart';
+import 'login_signup/login.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
@@ -11,6 +13,17 @@ class MorePage extends StatefulWidget {
 
 class _MorePageState extends State<MorePage> {
   final TextEditingController _feedbackController = TextEditingController();
+
+  Future<void> _signOut() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setBool('isAuthenticated', false);
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+    );
+  }
 
   Future<void> _showFeedbackReceivedDialog(BuildContext context) async {
     return showDialog<void>(
@@ -47,6 +60,20 @@ class _MorePageState extends State<MorePage> {
             'More',
             style: TextStyle(color: Colors.black),
           ),
+          actions: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                onPressed: () {
+                  _signOut();
+                },
+                child: const Text("Sign Out"),
+              ),
+            ),
+          ],
+          automaticallyImplyLeading: false,
         ),
       ),
       body: SingleChildScrollView(

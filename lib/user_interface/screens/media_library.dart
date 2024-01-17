@@ -40,6 +40,7 @@ class _MediaLibraryPageState extends State<MediaLibraryPage> {
             'Discover',
             style: TextStyle(color: Colors.black),
           ),
+          automaticallyImplyLeading: false,
         ),
       ),
       body: Column(

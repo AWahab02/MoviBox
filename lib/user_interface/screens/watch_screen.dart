@@ -87,6 +87,7 @@ class _WatchScreenState extends State<WatchScreen> {
               },
             ),
           ],
+          automaticallyImplyLeading: false,
         ),
       ),
       body: _showSearchBar

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:movies_tickets_task/user_interface/screens/login_signup/signup.dart';
 import 'package:movies_tickets_task/user_interface/screens/welcome_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../widgets/login_button.dart';
 
@@ -31,13 +32,45 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       loading = true;
     });
+
     _auth
         .signInWithEmailAndPassword(
-            email: emailController.text.toString(),
-            password: passwordController.text.toString())
+      email: emailController.text.toString(),
+      password: passwordController.text.toString(),
+    )
         .then((value) {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+      SharedPreferences.getInstance().then((prefs) {
+        prefs.setBool('isAuthenticated', true);
+        setState(() {
+          loading = false;
+        });
+      });
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+      );
+    }).catchError((error) {
+      String errorMessage = "An error occurred during login.";
+
+      if (error is FirebaseAuthException) {
+        switch (error.code) {
+          case "user-not-found":
+            errorMessage = "User not found. Please check your email.";
+            break;
+          case "wrong-password":
+            errorMessage = "Incorrect password. Please try again.";
+            break;
+        }
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+
       setState(() {
         loading = false;
       });

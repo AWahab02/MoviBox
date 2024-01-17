@@ -7,6 +7,11 @@ class seatsProvider with ChangeNotifier {
 
   int get totalprice => _totalprice;
 
+  void settotalprice(int x) {
+    _totalprice = x;
+    notifyListeners();
+  }
+
   void updateTotalPrice(int row, int col, List<List<Color>> seatColors) {
     int selectedSeatsCount = 0;
 
