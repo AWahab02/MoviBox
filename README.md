@@ -1,6 +1,6 @@
-# Flutter Movies App
+# Flutter Movies App - Cowlar Task 
 
-Welcome to the Flutter Movies App! This mobile application offers a delightful experience for movie enthusiasts, allowing them to explore upcoming movies, discover top-rated films, view detailed movie information, watch trailers, and seamlessly purchase tickets for their favorite movies.
+A movie ticket booking app which uses the TMDB database and allows the user to fetch movies according to their preferences and allows them to book the movie for watching in a cinema hall.
 
 ## Features
 
@@ -8,6 +8,7 @@ Welcome to the Flutter Movies App! This mobile application offers a delightful e
 
 - Presents a curated list of upcoming movies.
 - Each movie is showcased with a card featuring the movie poster and title.
+- Displays all movies when the user is offline
 
 <img src="https://github.com/AWahab02/flutter_task_movies/assets/114500718/3769fe0b-d50a-4a3d-b8a7-a83a7a19234b" alt="Upcoming Movies Screen" height="400">
 
@@ -15,6 +16,8 @@ Welcome to the Flutter Movies App! This mobile application offers a delightful e
 
 - Provides a dedicated tab showcasing the top-rated movies of all time.
 - Movie cards display the poster and title of the top-rated films.
+- Displays all movies when the user is offline
+
 
 <img src="https://github.com/AWahab02/flutter_task_movies/assets/114500718/93db2194-adc7-4490-aca4-81dd714517fb" alt="Search Screen" height="400">
 
@@ -51,8 +54,10 @@ In this case, the action movies genre is selected by the user:
 
 ### 5. Sign Up and Login Pages:
 
+
 - Provides a seamless user experience with secure sign-up and login functionality.
 - Allows users to create accounts and log in to access personalized features.
+- Uses Firebase
 
 <img src="https://github.com/AWahab02/flutter_task_movies/assets/114500718/a2c472dd-4ca9-4ecf-b51b-aa6f8404b9a2" alt="Screenshot_1705519566" height="400">
 
