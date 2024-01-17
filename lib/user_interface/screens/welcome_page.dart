@@ -48,6 +48,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             'Upcoming',
             style: TextStyle(color: Colors.black),
           ),
+          automaticallyImplyLeading: false,
         ),
       ),
       body: Consumer<MovieProvider>(

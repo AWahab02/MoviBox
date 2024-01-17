@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_tickets_task/user_interface/screens/login_signup/login.dart';
 import 'package:movies_tickets_task/user_interface/screens/media_library.dart';
 import 'package:movies_tickets_task/user_interface/screens/more.dart';
 import 'package:movies_tickets_task/user_interface/screens/tickets_pages/tickets_page.dart';
@@ -11,6 +12,7 @@ class Routes {
   static const String ticketsScreen = '/tickets';
   static const String moreScreen = '/more';
   static const String mediaLibraryscreen = '/mediaLibrary';
+  static const String loginScreen = '/login';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -28,6 +30,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const MorePage());
       case Routes.mediaLibraryscreen:
         return MaterialPageRoute(builder: (_) => const MediaLibraryPage());
+      case Routes.loginScreen:
+        return MaterialPageRoute(builder: (_) => const LoginPage());
       default:
         return _errorRoute();
     }

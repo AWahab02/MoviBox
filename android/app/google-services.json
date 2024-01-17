@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "852602800167",
+    "project_id": "cowlar-task",
+    "storage_bucket": "cowlar-task.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852602800167:android:c65f23c2243597d1126602",
+        "android_client_info": {
+          "package_name": "com.example.movies_tickets_task"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZ-N-s7kpkS2SZDU-aggJv4--frpPNuUc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

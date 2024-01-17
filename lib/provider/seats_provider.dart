@@ -19,10 +19,16 @@ class seatsProvider with ChangeNotifier {
     }
 
     // Update the seat color
-    seatColors[row][col] = kSelected;
-
-    // Update total price based on the selected seats count
-    _totalprice += 50;
+    if (seatColors[row][col] == kSelected) {
+      seatColors[row][col] = kGetTickets;
+      _totalprice -= 50;
+    } else if (seatColors[row][col] == kGetTickets) {
+      seatColors[row][col] = kSelected;
+      _totalprice += 50;
+    } else if (seatColors[row][col] == kVIP) {
+      seatColors[row][col] = kSelected;
+      _totalprice += 150;
+    }
 
     // Notify listeners
     notifyListeners();

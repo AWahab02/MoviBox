@@ -52,8 +52,8 @@ class MovieProvider with ChangeNotifier {
       result = await tmdbWithLogs.v3.search.queryMovies(query);
     } else {
       result = await tmdbWithLogs.v3.movies.getTopRated();
+      // getMoviesFromDb();
     }
-
     TopRatedMovies = result['results'];
     notifyListeners();
     print(TopRatedMovies);
@@ -71,6 +71,15 @@ class MovieProvider with ChangeNotifier {
     upcomingMovies = result['results'];
     notifyListeners();
     print(TopRatedMovies);
+  }
+
+  gettopratedmovies({String? query}) async {
+    connected = await InternetConnectionChecker().hasConnection;
+    if (connected) {
+      loadMoviesTopRated(query: query).then((value) => saveMoviesToDb());
+    } else {
+      getMoviesFromDb();
+    }
   }
 
   getupcomingmovies({String? query}) async {
@@ -125,6 +134,7 @@ class MovieProvider with ChangeNotifier {
     final movieDao = database.movieDao;
     List<MovieDatabaseModel> moviesToShowList = await movieDao.findAllMovies();
     moviesToShow = moviesToShowList;
+    // TopRatedMovies = moviesToShow;
     notifyListeners();
   }
 }

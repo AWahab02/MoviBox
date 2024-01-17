@@ -7,6 +7,7 @@ import 'package:tmdb_api/tmdb_api.dart';
 
 import '../../provider/movie_provider.dart';
 import '../movies/movies_list.dart';
+import '../movies/movies_list_offline.dart';
 
 class WatchScreen extends StatefulWidget {
   const WatchScreen({Key? key}) : super(key: key);
@@ -22,6 +23,7 @@ class _WatchScreenState extends State<WatchScreen> {
   bool _showSearchBar = false;
   late TMDB tmdbWithLogs;
   final TextEditingController _searchController = TextEditingController();
+  late bool connected;
 
   @override
   void initState() {
@@ -32,7 +34,7 @@ class _WatchScreenState extends State<WatchScreen> {
           showLogs: true,
           showErrorLogs: true,
         ));
-    movieprovider.loadMoviesTopRated();
+    movieprovider.gettopratedmovies();
     super.initState();
   }
 
@@ -95,7 +97,11 @@ class _WatchScreenState extends State<WatchScreen> {
             )
           : Consumer<MovieProvider>(
               builder: (context, value, child) {
-                return MoviesList(listofMovies: value.TopRatedMovies);
+                if (value.connected) {
+                  return MoviesList(listofMovies: value.TopRatedMovies);
+                } else {
+                  return MoviesListOffline(listofMovies: value.moviesToShow);
+                }
               },
             ),
       bottomNavigationBar: const CustomNavBar(

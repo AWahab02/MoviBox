@@ -117,7 +117,7 @@ class _SeatSelectorState extends State<SeatSelector> {
                       ),
                       child: Center(
                         child: Text(
-                          '${row + 1}-${col + 1}',
+                          '${row + 1}${col + 1}',
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
