@@ -1,4 +1,4 @@
-# Flutter Movies and Cinema App
+# Movibox - Flutter Movies and Cinema App
 
 A movie ticket booking app which uses the TMDB database and allows the user to fetch movies according to their preferences and allows them to book the movie for watching in a cinema hall.
 
